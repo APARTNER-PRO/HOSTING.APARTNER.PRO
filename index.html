@@ -121,6 +121,32 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:40px 24px;text-align:c
 .footer-logo-text{font-family:'Syne',sans-serif;font-weight:800;font-size:16px}
 .footer-tagline{font-size:13px;color:rgba(240,244,255,.3);margin-bottom:4px}
 .footer-copy{font-size:12px;color:rgba(240,244,255,.2)}
+.modal-overlay{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(5,8,16,.82);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.modal-overlay.open{display:flex}
+.modal-card{width:min(100%,560px);position:relative;overflow:hidden;border-radius:28px;border:1px solid rgba(96,165,250,.2);background:linear-gradient(180deg,rgba(11,18,34,.98),rgba(7,11,22,.98));box-shadow:0 30px 120px rgba(4,8,16,.72),0 0 70px rgba(96,165,250,.08)}
+.modal-head{position:relative;z-index:2;padding:28px 28px 24px;border-bottom:1px solid rgba(255,255,255,.06)}
+.modal-top{display:flex;align-items:flex-start;justify-content:space-between;gap:18px}
+.modal-badge{display:inline-flex;align-items:center;gap:8px;margin-bottom:14px;padding:6px 12px;border-radius:999px;background:rgba(96,165,250,.12);border:1px solid rgba(96,165,250,.18);color:#93C5FD;font-size:12px;font-weight:700}
+.modal-title{font-family:'Syne',sans-serif;font-size:clamp(28px,4vw,36px);line-height:1.05;letter-spacing:-1px;margin-bottom:10px}
+.modal-sub{font-size:14px;line-height:1.7;color:rgba(240,244,255,.58);max-width:420px}
+.modal-close{width:42px;height:42px;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.05);color:#F0F4FF;cursor:pointer;font-size:22px;flex-shrink:0}
+.modal-body{position:relative;z-index:2;padding:28px}
+.modal-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-bottom:24px}
+.modal-stat{border-radius:18px;padding:16px 18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06)}
+.modal-stat-label{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:rgba(240,244,255,.32);margin-bottom:8px}
+.modal-stat-value{font-size:16px;font-weight:700}
+.modal-price{font-family:'Syne',sans-serif;font-size:28px;font-weight:800}
+.modal-form{display:grid;gap:14px}
+.modal-input{width:100%;padding:15px 16px;border-radius:14px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.05);color:#F0F4FF;font-size:15px;outline:none;transition:all .2s ease}
+.modal-input:focus{border-color:rgba(96,165,250,.45);box-shadow:0 0 0 4px rgba(96,165,250,.12);background:rgba(255,255,255,.07)}
+.modal-input::placeholder{color:rgba(240,244,255,.28)}
+.modal-actions{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:22px}
+.modal-status{min-height:22px;font-size:13px;color:rgba(240,244,255,.45)}
+.modal-status.success{color:#86EFAC}
+.modal-status.error{color:#FCA5A5}
+.modal-submit{background:linear-gradient(135deg,#3B82F6,#8B5CF6);border:none;color:#fff;padding:15px 28px;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;min-width:190px;transition:all .2s}
+.modal-submit:hover{transform:scale(1.03);filter:brightness(1.08)}
+.modal-submit:disabled{opacity:.75;cursor:wait}
 
 /* ---- ANIMATIONS ---- */
 @keyframes floatBadge{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
@@ -137,6 +163,7 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:40px 24px;text-align:c
   .hero-stats{gap:28px}
   .cta-box{padding:40px 24px}
   .billing-btn{padding:8px 12px;font-size:13px}
+  .modal-stats{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -258,6 +285,46 @@ footer{border-top:1px solid rgba(255,255,255,.06);padding:40px 24px;text-align:c
   <p class="footer-copy" data-i18n="footer.copy">© 2025 HostPro. Усі права захищені.</p>
 </footer>
 
+<div class="modal-overlay" id="plan-modal">
+  <div class="modal-card" onclick="event.stopPropagation()">
+    <div class="orb" style="width:220px;height:220px;background:radial-gradient(circle,rgba(59,130,246,.28),transparent);top:-70px;right:-40px"></div>
+    <div class="orb" style="width:190px;height:190px;background:radial-gradient(circle,rgba(139,92,246,.22),transparent);bottom:-70px;left:-30px"></div>
+    <div class="modal-head">
+      <div class="modal-top">
+        <div>
+          <div class="modal-badge" id="modal-badge">Plan order</div>
+          <h3 class="modal-title" id="modal-plan-name">Business</h3>
+          <p class="modal-sub" id="modal-subtitle">Leave your contact details and we will prepare the selected plan for you.</p>
+        </div>
+        <button class="modal-close" id="modal-close" aria-label="Close">×</button>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-stats">
+        <div class="modal-stat">
+          <div class="modal-stat-label" id="modal-plan-label">Selected plan</div>
+          <div class="modal-stat-value" id="modal-plan-value">Business</div>
+        </div>
+        <div class="modal-stat">
+          <div class="modal-stat-label" id="modal-billing-label">Monthly</div>
+          <div class="modal-price" id="modal-price" style="color:#60A5FA">$5.99</div>
+        </div>
+      </div>
+      <form id="form">
+        <div class="modal-form">
+          <input class="modal-input" type="text" name="name" id="modal-name" placeholder="Your name" required>
+          <input class="modal-input" type="tel" name="phone" id="modal-phone" placeholder="Phone" required>
+          <input class="modal-input" type="email" name="email" id="modal-email" placeholder="Email" required>
+        </div>
+        <div class="modal-actions">
+          <div class="modal-status" id="modal-status"></div>
+          <button class="modal-submit" type="submit">Send request</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <script>
 // ===== DATA =====
 const T = {
@@ -356,7 +423,17 @@ const T = {
 // ===== STATE =====
 let lang = 'uk';
 let billing = 'monthly';
+let selectedPlan = null;
 const DISC = {monthly:1,quarterly:0.9,yearly:0.8};
+const modal = document.getElementById('plan-modal');
+const form = document.getElementById('form');
+const submitBtn = form.querySelector('button[type="submit"]');
+const modalStatus = document.getElementById('modal-status');
+const modalCopy = {
+  uk:{title:"Замовлення тарифу",subtitle:"Залиште контакти, і ми підготуємо підключення для вибраного плану.",selectedPlan:"Вибраний тариф",name:"Ваше ім'я",phone:"Телефон",email:"Email",submit:"Надіслати заявку",sending:"Відправляємо...",success:"Дякуємо! Заявку успішно надіслано.",error:"Не вдалося надіслати заявку. Спробуйте ще раз."},
+  ru:{title:"Заказ тарифа",subtitle:"Оставьте контакты, и мы подготовим подключение для выбранного плана.",selectedPlan:"Выбранный тариф",name:"Ваше имя",phone:"Телефон",email:"Email",submit:"Отправить заявку",sending:"Отправляем...",success:"Спасибо! Заявка успешно отправлена.",error:"Не удалось отправить заявку. Попробуйте еще раз."},
+  en:{title:"Plan order",subtitle:"Leave your contact details and we will prepare the selected plan for you.",selectedPlan:"Selected plan",name:"Your name",phone:"Phone",email:"Email",submit:"Send request",sending:"Sending...",success:"Thanks! Your request has been sent successfully.",error:"Unable to send your request. Please try again."}
+};
 
 // ===== RENDER FEATURES =====
 function renderFeatures(){
@@ -376,7 +453,7 @@ function renderPlans(){
   const grid = document.getElementById('plans-grid');
   const t = T[lang].pricing;
   const disc = DISC[billing];
-  grid.innerHTML = t.plans.map(p=>{
+  grid.innerHTML = t.plans.map((p,index)=>{
     const price = (p.price * disc).toFixed(2);
     const feats = p.extras.map(e=>`
       <div class="plan-feat-item">
@@ -399,7 +476,7 @@ function renderPlans(){
           <span class="plan-price" style="color:${p.color}">$${price}</span>
           <span class="plan-mo">${t.mo}</span>
         </div>
-        <button class="btn-plan${p.popular?' primary':''}">${t.cta}</button>
+        <button class="btn-plan${p.popular?' primary':''}" onclick="openPlanModal(${index})">${t.cta}</button>
         <div class="plan-features">
           <div class="plan-feat-label">${t.feat_label}</div>
           ${feats}
@@ -461,6 +538,88 @@ function setBilling(b){
   document.getElementById('bill-'+b).classList.add('active');
   renderPlans();
 }
+
+function getBillingLabel(){
+  return T[lang].billing[billing];
+}
+
+function openPlanModal(index){
+  selectedPlan = T[lang].pricing.plans[index];
+  const copy = modalCopy[lang];
+  const price = (selectedPlan.price * DISC[billing]).toFixed(2);
+  document.getElementById('modal-badge').textContent = copy.title;
+  document.getElementById('modal-plan-name').textContent = selectedPlan.name;
+  document.getElementById('modal-subtitle').textContent = copy.subtitle;
+  document.getElementById('modal-plan-label').textContent = copy.selectedPlan;
+  document.getElementById('modal-plan-value').textContent = selectedPlan.name;
+  document.getElementById('modal-billing-label').textContent = getBillingLabel();
+  document.getElementById('modal-price').textContent = `$${price}`;
+  document.getElementById('modal-price').style.color = selectedPlan.color;
+  document.getElementById('modal-name').placeholder = copy.name;
+  document.getElementById('modal-phone').placeholder = copy.phone;
+  document.getElementById('modal-email').placeholder = copy.email;
+  submitBtn.textContent = copy.submit;
+  modalStatus.textContent = '';
+  modalStatus.className = 'modal-status';
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePlanModal(){
+  modal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('modal-close').addEventListener('click', closePlanModal);
+modal.addEventListener('click', closePlanModal);
+window.addEventListener('keydown', (e)=>{
+  if(e.key === 'Escape' && modal.classList.contains('open')) closePlanModal();
+});
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if (!selectedPlan) return;
+
+  const formData = new FormData(form);
+  formData.append("access_key", "a72480be-888b-4991-b3e0-0970cf4e965e");
+  formData.append("plan", selectedPlan.name);
+  formData.append("billing_period", getBillingLabel());
+  formData.append("price", `$${(selectedPlan.price * DISC[billing]).toFixed(2)}`);
+  formData.append("language", lang.toUpperCase());
+  formData.append("subject", `New hosting order: ${selectedPlan.name}`);
+
+  const originalText = submitBtn.textContent;
+  const copy = modalCopy[lang];
+
+  submitBtn.textContent = copy.sending;
+  submitBtn.disabled = true;
+  modalStatus.textContent = '';
+  modalStatus.className = 'modal-status';
+
+  try {
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      body: formData
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      modalStatus.textContent = copy.success;
+      modalStatus.className = 'modal-status success';
+      form.reset();
+    } else {
+      modalStatus.textContent = data.message || copy.error;
+      modalStatus.className = 'modal-status error';
+    }
+  } catch (error) {
+    modalStatus.textContent = copy.error;
+    modalStatus.className = 'modal-status error';
+  } finally {
+    submitBtn.textContent = originalText;
+    submitBtn.disabled = false;
+  }
+});
 
 // ===== SCROLL ANIMATIONS =====
 function initScrollAnim(){
