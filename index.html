@@ -1,16 +1,483 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>HostPro</title>
-    <meta
-      name="description"
-      content="HostPro landing page with pricing, features, and multilingual support."
-    />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
-  </html>
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>HostPro — Надійний хостинг для вашого бізнесу</title>
+<meta name="description" content="Швидкий NVMe SSD хостинг з cPanel, безкоштовним SSL та підтримкою 24/7. Тарифи від $2.99/міс."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:#050810;color:#F0F4FF;min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:#050810}
+::-webkit-scrollbar-thumb{background:#1e3a5f;border-radius:3px}
+
+/* ---- LAYOUT ---- */
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+.section{padding:120px 24px}
+
+/* ---- NAV ---- */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:rgba(5,8,16,.85);border-bottom:1px solid rgba(255,255,255,.06);padding:0 24px}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;color:#F0F4FF}
+.logo-icon{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#3B82F6,#8B5CF6);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.logo-text{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;letter-spacing:-.5px}
+.nav-links{display:flex;gap:32px;align-items:center}
+.nav-links a{color:rgba(240,244,255,.6);font-size:14px;font-weight:500;text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:#60A5FA}
+.nav-right{display:flex;align-items:center;gap:16px}
+.lang-switcher{display:flex;gap:3px;background:rgba(255,255,255,.05);border-radius:8px;padding:3px}
+.lang-btn{background:transparent;color:rgba(240,244,255,.4);border:none;padding:4px 10px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:700;text-transform:uppercase;font-family:'DM Sans',sans-serif;transition:all .2s}
+.lang-btn.active{background:rgba(96,165,250,.2);color:#60A5FA}
+.btn-nav{background:linear-gradient(135deg,#3B82F6,#8B5CF6);border:none;color:#fff;padding:8px 18px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-nav:hover{transform:scale(1.04);filter:brightness(1.12)}
+
+/* ---- GRID BG ---- */
+.grid-bg{background-image:linear-gradient(rgba(96,165,250,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(96,165,250,.04) 1px,transparent 1px);background-size:48px 48px}
+
+/* ---- GLOW ORBS ---- */
+.orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none}
+
+/* ---- HERO ---- */
+#hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;padding-top:80px;overflow:hidden}
+.hero-content{text-align:center;max-width:820px;padding:0 24px;position:relative;z-index:2}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.25);border-radius:100px;padding:6px 16px;font-size:13px;color:#93C5FD;margin-bottom:32px;font-weight:500;animation:floatBadge 3s ease-in-out infinite}
+.hero-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(48px,8vw,88px);line-height:1.05;letter-spacing:-2px;margin-bottom:24px}
+.hero-title .line1{display:block;color:#F0F4FF}
+.hero-title .line2{display:block;background:linear-gradient(135deg,#60A5FA 0%,#A78BFA 50%,#FB923C 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:clamp(16px,2vw,20px);color:rgba(240,244,255,.6);line-height:1.7;max-width:600px;margin:0 auto 40px;font-weight:300}
+.btn-hero{background:linear-gradient(135deg,#3B82F6,#8B5CF6);border:none;color:#fff;padding:16px 36px;border-radius:12px;font-size:17px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;box-shadow:0 0 40px rgba(59,130,246,.3);transition:all .2s;margin-bottom:16px}
+.btn-hero:hover{transform:scale(1.04);filter:brightness(1.1)}
+.hero-note{font-size:13px;color:rgba(240,244,255,.35);font-weight:400;margin-bottom:64px}
+.hero-stats{display:flex;gap:48px;justify-content:center;flex-wrap:wrap}
+.hero-stat-val{font-family:'Syne',sans-serif;font-size:36px;font-weight:800;background:linear-gradient(135deg,#60A5FA,#A78BFA);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-stat-label{font-size:13px;color:rgba(240,244,255,.45);margin-top:4px;font-weight:400}
+
+/* ---- FEATURES ---- */
+.section-header{text-align:center;margin-bottom:72px}
+.section-title{font-family:'Syne',sans-serif;font-size:clamp(32px,5vw,52px);font-weight:800;letter-spacing:-1px;margin-bottom:16px}
+.section-sub{font-size:18px;color:rgba(240,244,255,.5);font-weight:300}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.feat-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:28px;transition:transform .25s,background .25s;cursor:default}
+.feat-card:hover{transform:translateY(-4px);background:rgba(255,255,255,.055)}
+.feat-icon{font-size:32px;margin-bottom:16px}
+.feat-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin-bottom:8px}
+.feat-desc{font-size:14px;color:rgba(240,244,255,.55);line-height:1.7;font-weight:300}
+
+/* ---- PRICING ---- */
+#pricing{position:relative;padding:120px 24px;background:rgba(255,255,255,.015)}
+.billing-toggle{display:flex;justify-content:center;margin-bottom:60px}
+.billing-inner{display:flex;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:4px;gap:4px}
+.billing-btn{background:transparent;color:rgba(240,244,255,.5);border:1px solid transparent;padding:10px 20px;border-radius:9px;cursor:pointer;font-size:14px;font-weight:600;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:8px;transition:all .2s}
+.billing-btn.active{background:rgba(96,165,250,.2);color:#60A5FA;border-color:rgba(96,165,250,.3)}
+.badge-save{font-size:11px;padding:1px 6px;border-radius:100px;font-weight:700}
+.badge-orange{background:rgba(251,146,60,.2);color:#FB923C}
+.badge-green{background:rgba(110,231,183,.2);color:#6EE7B7}
+.plans-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;align-items:start}
+.plan-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:20px;padding:32px 28px;position:relative;transition:transform .3s,box-shadow .3s;cursor:default}
+.plan-card:hover{transform:translateY(-8px)}
+.plan-card.popular{background:linear-gradient(160deg,rgba(96,165,250,.1),rgba(139,92,246,.08));border-color:rgba(96,165,250,.35);box-shadow:0 0 60px rgba(59,130,246,.12)}
+.popular-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#3B82F6,#8B5CF6);color:#fff;font-size:12px;font-weight:700;padding:5px 16px;border-radius:100px;white-space:nowrap;font-family:'DM Sans',sans-serif}
+.plan-header{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.plan-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.plan-name{font-family:'Syne',sans-serif;font-size:22px;font-weight:800}
+.plan-desc{font-size:13px;color:rgba(240,244,255,.45);margin-bottom:24px;font-weight:300}
+.plan-price-wrap{margin-bottom:24px}
+.plan-price{font-family:'Syne',sans-serif;font-size:44px;font-weight:800;transition:color .3s}
+.plan-mo{font-size:14px;color:rgba(240,244,255,.4);font-weight:300}
+.btn-plan{width:100%;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.07);color:#fff;padding:12px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;margin-bottom:24px}
+.btn-plan:hover{background:rgba(255,255,255,.12);transform:scale(1.02)}
+.btn-plan.primary{background:linear-gradient(135deg,#3B82F6,#8B5CF6);border:none}
+.btn-plan.primary:hover{filter:brightness(1.1)}
+.plan-features{border-top:1px solid rgba(255,255,255,.07);padding-top:20px}
+.plan-feat-label{font-size:12px;color:rgba(240,244,255,.35);margin-bottom:12px;font-weight:500;text-transform:uppercase;letter-spacing:.08em}
+.plan-feat-item{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.plan-feat-item span{font-size:13px;color:rgba(240,244,255,.7);font-weight:400}
+
+/* ---- WHO ---- */
+.who-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.who-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:20px;padding:32px 28px;text-align:center;transition:transform .25s;cursor:default}
+.who-card:hover{transform:translateY(-4px)}
+.who-emoji{font-size:40px;margin-bottom:20px;display:inline-flex;align-items:center;justify-content:center;border-radius:16px;width:72px;height:72px}
+.who-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;margin-bottom:10px}
+.who-desc{font-size:14px;color:rgba(240,244,255,.55);line-height:1.7;font-weight:300}
+
+/* ---- CTA SECTION ---- */
+.cta-section{padding:80px 24px}
+.cta-box{background:linear-gradient(135deg,rgba(59,130,246,.15),rgba(139,92,246,.15));border:1px solid rgba(96,165,250,.2);border-radius:24px;padding:60px 48px;text-align:center;position:relative;overflow:hidden;max-width:800px;margin:0 auto}
+.cta-title{font-family:'Syne',sans-serif;font-size:clamp(28px,4vw,44px);font-weight:800;letter-spacing:-1px;margin-bottom:16px;position:relative;z-index:1}
+.cta-sub{font-size:16px;color:rgba(240,244,255,.55);margin-bottom:32px;font-weight:300;position:relative;z-index:1}
+.btn-cta{background:linear-gradient(135deg,#3B82F6,#8B5CF6);border:none;color:#fff;padding:16px 40px;border-radius:12px;font-size:17px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;box-shadow:0 0 40px rgba(59,130,246,.3);transition:all .2s;position:relative;z-index:1}
+.btn-cta:hover{transform:scale(1.04);filter:brightness(1.1)}
+
+/* ---- FOOTER ---- */
+footer{border-top:1px solid rgba(255,255,255,.06);padding:40px 24px;text-align:center}
+.footer-logo{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:12px}
+.footer-logo-icon{width:28px;height:28px;border-radius:7px;background:linear-gradient(135deg,#3B82F6,#8B5CF6);display:flex;align-items:center;justify-content:center;font-size:14px}
+.footer-logo-text{font-family:'Syne',sans-serif;font-weight:800;font-size:16px}
+.footer-tagline{font-size:13px;color:rgba(240,244,255,.3);margin-bottom:4px}
+.footer-copy{font-size:12px;color:rgba(240,244,255,.2)}
+
+/* ---- ANIMATIONS ---- */
+@keyframes floatBadge{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes pulseGlow{0%,100%{opacity:.4}50%{opacity:.8}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:translateY(0)}}
+.fade-up{opacity:0;transform:translateY(32px);transition:opacity .7s ease,transform .7s ease}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+.orb-pulse{animation:pulseGlow 4s ease-in-out infinite}
+
+/* ---- RESPONSIVE ---- */
+@media(max-width:768px){
+  .nav-links{display:none}
+  .nav-right .btn-nav{display:none}
+  .hero-stats{gap:28px}
+  .cta-box{padding:40px 24px}
+  .billing-btn{padding:8px 12px;font-size:13px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#hero" class="logo">
+      <div class="logo-icon">⚡</div>
+      <span class="logo-text">HostPro</span>
+    </a>
+    <div class="nav-links">
+      <a href="#features" data-i18n="nav.features">Переваги</a>
+      <a href="#pricing" data-i18n="nav.pricing">Тарифи</a>
+      <a href="#who" data-i18n="nav.who">Для кого</a>
+    </div>
+    <div class="nav-right">
+      <div class="lang-switcher">
+        <button class="lang-btn active" onclick="setLang('uk')">UK</button>
+        <button class="lang-btn" onclick="setLang('ru')">RU</button>
+        <button class="lang-btn" onclick="setLang('en')">EN</button>
+      </div>
+      <button class="btn-nav" data-i18n="nav.cta">Розпочати</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero" class="grid-bg">
+  <div class="orb orb-pulse" style="width:600px;height:600px;background:radial-gradient(circle,rgba(59,130,246,.22),transparent);top:10%;left:50%;transform:translateX(-50%)"></div>
+  <div class="orb" style="width:300px;height:300px;background:radial-gradient(circle,rgba(139,92,246,.18),transparent);bottom:20%;right:10%"></div>
+  <div class="orb" style="width:200px;height:200px;background:radial-gradient(circle,rgba(251,146,60,.13),transparent);top:30%;left:5%"></div>
+  <div class="hero-content">
+    <div class="hero-badge" data-i18n="hero.badge">⚡ NVMe SSD · 99.9% Uptime · cPanel</div>
+    <h1 class="hero-title">
+      <span class="line1" data-i18n="hero.title1">Хостинг, який</span>
+      <span class="line2" data-i18n="hero.title2">просто працює</span>
+    </h1>
+    <p class="hero-sub" data-i18n="hero.sub">Швидкі SSD-сервери, безкоштовний SSL, cPanel та підтримка 24/7. Запустіть свій сайт за хвилини.</p>
+    <button class="btn-hero" data-i18n="hero.cta">Почати зараз →</button>
+    <p class="hero-note" data-i18n="hero.ctaSub">Без прихованих платежів · Скасування в будь-який час</p>
+    <div class="hero-stats">
+      <div><div class="hero-stat-val">12K+</div><div class="hero-stat-label" data-i18n="hero.stat1">Активних сайтів</div></div>
+      <div><div class="hero-stat-val">0.3s</div><div class="hero-stat-label" data-i18n="hero.stat2">Час завантаження</div></div>
+      <div><div class="hero-stat-val">99.9%</div><div class="hero-stat-label" data-i18n="hero.stat3">Uptime SLA</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="section">
+  <div class="container">
+    <div class="section-header fade-up">
+      <h2 class="section-title" data-i18n="features.title">Все, що потрібно для успіху</h2>
+      <p class="section-sub" data-i18n="features.sub">Ми подбали про інфраструктуру — ви зосередьтесь на бізнесі</p>
+    </div>
+    <div class="features-grid fade-up" id="features-grid"></div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="orb" style="width:500px;height:500px;background:radial-gradient(circle,rgba(139,92,246,.1),transparent);top:0;right:0;pointer-events:none;filter:blur(80px);position:absolute"></div>
+  <div class="container" style="position:relative;z-index:2">
+    <div class="section-header fade-up">
+      <h2 class="section-title" data-i18n="pricing.title">Прозорі тарифи</h2>
+      <p class="section-sub" data-i18n="pricing.sub">Оберіть план і масштабуйтесь без обмежень</p>
+    </div>
+    <div class="billing-toggle fade-up">
+      <div class="billing-inner">
+        <button class="billing-btn active" id="bill-monthly" onclick="setBilling('monthly')">
+          <span data-i18n="billing.monthly">Щомісяця</span>
+        </button>
+        <button class="billing-btn" id="bill-quarterly" onclick="setBilling('quarterly')">
+          <span data-i18n="billing.quarterly">Щоквартально</span>
+          <span class="badge-save badge-orange" data-i18n="billing.save10">−10%</span>
+        </button>
+        <button class="billing-btn" id="bill-yearly" onclick="setBilling('yearly')">
+          <span data-i18n="billing.yearly">Щорічно</span>
+          <span class="badge-save badge-green" data-i18n="billing.save20">−20%</span>
+        </button>
+      </div>
+    </div>
+    <div class="plans-grid fade-up" id="plans-grid"></div>
+  </div>
+</section>
+
+<!-- WHO -->
+<section id="who" class="section">
+  <div class="container">
+    <div class="section-header fade-up">
+      <h2 class="section-title" data-i18n="who.title">Для кого підходить?</h2>
+      <p class="section-sub" data-i18n="who.sub">Масштабоване рішення для будь-якого розміру бізнесу</p>
+    </div>
+    <div class="who-grid fade-up" id="who-grid"></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="fade-up">
+    <div class="cta-box">
+      <div class="orb" style="width:300px;height:300px;background:radial-gradient(circle,rgba(59,130,246,.18),transparent);top:-50%;left:50%;transform:translateX(-50%)"></div>
+      <h2 class="cta-title" data-i18n="cta.title">Готові розпочати?</h2>
+      <p class="cta-sub" data-i18n="cta.sub">Запустіть перший сайт вже сьогодні — без технічних знань.</p>
+      <button class="btn-cta" data-i18n="nav.cta">Розпочати →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <div class="footer-logo-icon">⚡</div>
+    <span class="footer-logo-text">HostPro</span>
+  </div>
+  <p class="footer-tagline" data-i18n="footer.tagline">Сучасний хостинг для сучасних проєктів.</p>
+  <p class="footer-copy" data-i18n="footer.copy">© 2025 HostPro. Усі права захищені.</p>
+</footer>
+
+<script>
+// ===== DATA =====
+const T = {
+  uk: {
+    nav:{features:"Переваги",pricing:"Тарифи",who:"Для кого",cta:"Розпочати"},
+    hero:{badge:"⚡ NVMe SSD · 99.9% Uptime · cPanel",title1:"Хостинг, який",title2:"просто працює",sub:"Швидкі SSD-сервери, безкоштовний SSL, cPanel та підтримка 24/7. Запустіть свій сайт за хвилини.",cta:"Почати зараз →",ctaSub:"Без прихованих платежів · Скасування в будь-який час",stat1:"Активних сайтів",stat2:"Час завантаження",stat3:"Uptime SLA"},
+    features:{title:"Все, що потрібно для успіху",sub:"Ми подбали про інфраструктуру — ви зосередьтесь на бізнесі",
+      items:[
+        {icon:"⚡",title:"NVMe SSD",desc:"Швидкість у 3× швидша за звичайний SSD. Ваш сайт завантажується миттєво."},
+        {icon:"🔒",title:"SSL безкоштовно",desc:"Let's Encrypt SSL для кожного домену. Автоматично й без доплат."},
+        {icon:"📋",title:"cPanel",desc:"Зручна панель управління для всіх ваших сайтів і поштових скриньок."},
+        {icon:"💾",title:"Щоденний бекап",desc:"Автоматичні резервні копії щодня. Відновлення в один клік."},
+        {icon:"🌐",title:"99.9% Uptime",desc:"Гарантована доступність. SLA-угода з кожним тарифом."},
+        {icon:"🎧",title:"Підтримка 24/7",desc:"Живі спеціалісти щодня. Середній час відповіді — 5 хвилин."}
+      ]},
+    billing:{monthly:"Щомісяця",quarterly:"Щоквартально",yearly:"Щорічно",save10:"−10%",save20:"−20%"},
+    pricing:{title:"Прозорі тарифи",sub:"Оберіть план і масштабуйтесь без обмежень",popular:"Найпопулярніший",mo:"/міс",cta:"Обрати план",feat_label:"Включено:",
+      plans:[
+        {name:"Starter",desc:"Ідеально для першого сайту",price:2.99,color:"#6EE7B7",popular:false,extras:["1 сайт","5 GB NVMe SSD","1 Email акаунт","Безкоштовний SSL","cPanel"]},
+        {name:"Business",desc:"Для зростаючих проєктів",price:5.99,color:"#60A5FA",popular:true,extras:["до 5 сайтів","15 GB NVMe SSD","10 Email акаунтів","Безкоштовний SSL","Щоденний бекап","cPanel"]},
+        {name:"Pro",desc:"Для серйозних проєктів",price:9.99,color:"#A78BFA",popular:false,extras:["до 15 сайтів","30 GB NVMe SSD","Необмежено Email","Безкоштовний SSL","Пріоритетний бекап","Пріоритетна підтримка"]},
+        {name:"Agency",desc:"Для агентств і розробників",price:19.99,color:"#FB923C",popular:false,extras:["до 30 сайтів","60 GB NVMe SSD","Необмежено Email","Wildcard SSL","White-label готовий","VIP підтримка 24/7"]}
+      ]},
+    who:{title:"Для кого підходить?",sub:"Масштабоване рішення для будь-якого розміру бізнесу",
+      items:[
+        {icon:"🏢",color:"#6EE7B7",bg:"rgba(110,231,183,.1)",title:"Бізнес",desc:"Корпоративні сайти, лендинги, CRM. Надійність і швидкість для вашого бренду."},
+        {icon:"👨‍💻",color:"#60A5FA",bg:"rgba(96,165,250,.1)",title:"Розробники",desc:"Перепродавайте хостинг клієнтам під власним брендом. White-label рішення."},
+        {icon:"🛒",color:"#A78BFA",bg:"rgba(167,139,250,.1)",title:"Інтернет-магазини",desc:"WooCommerce, PrestaShop, OpenCart. Швидкий хостинг для e-commerce."},
+        {icon:"🚀",color:"#FB923C",bg:"rgba(251,146,60,.1)",title:"Стартапи",desc:"Почніть малим і масштабуйтесь миттєво. Без переїздів і простоїв."}
+      ]},
+    cta:{title:"Готові розпочати?",sub:"Запустіть перший сайт вже сьогодні — без технічних знань."},
+    footer:{tagline:"Сучасний хостинг для сучасних проєктів.",copy:"© 2025 HostPro. Усі права захищені."}
+  },
+  ru: {
+    nav:{features:"Преимущества",pricing:"Тарифы",who:"Для кого",cta:"Начать"},
+    hero:{badge:"⚡ NVMe SSD · 99.9% Uptime · cPanel",title1:"Хостинг, который",title2:"просто работает",sub:"Быстрые SSD-серверы, бесплатный SSL, cPanel и поддержка 24/7. Запустите сайт за минуты.",cta:"Начать сейчас →",ctaSub:"Без скрытых платежей · Отмена в любое время",stat1:"Активных сайтов",stat2:"Время загрузки",stat3:"Uptime SLA"},
+    features:{title:"Всё, что нужно для успеха",sub:"Мы позаботились об инфраструктуре — вы сосредоточьтесь на бизнесе",
+      items:[
+        {icon:"⚡",title:"NVMe SSD",desc:"Скорость в 3× быстрее обычного SSD. Ваш сайт загружается мгновенно."},
+        {icon:"🔒",title:"SSL бесплатно",desc:"Let's Encrypt SSL для каждого домена. Автоматически и без доплат."},
+        {icon:"📋",title:"cPanel",desc:"Удобная панель управления для всех сайтов и почтовых ящиков."},
+        {icon:"💾",title:"Ежедневный бекап",desc:"Автоматические резервные копии каждый день. Восстановление в один клик."},
+        {icon:"🌐",title:"99.9% Uptime",desc:"Гарантированная доступность. SLA-соглашение с каждым тарифом."},
+        {icon:"🎧",title:"Поддержка 24/7",desc:"Живые специалисты каждый день. Среднее время ответа — 5 минут."}
+      ]},
+    billing:{monthly:"Ежемесячно",quarterly:"Ежеквартально",yearly:"Ежегодно",save10:"−10%",save20:"−20%"},
+    pricing:{title:"Прозрачные тарифы",sub:"Выберите план и масштабируйтесь без ограничений",popular:"Самый популярный",mo:"/мес",cta:"Выбрать план",feat_label:"Включено:",
+      plans:[
+        {name:"Starter",desc:"Идеально для первого сайта",price:2.99,color:"#6EE7B7",popular:false,extras:["1 сайт","5 GB NVMe SSD","1 Email аккаунт","Бесплатный SSL","cPanel"]},
+        {name:"Business",desc:"Для растущих проектов",price:5.99,color:"#60A5FA",popular:true,extras:["до 5 сайтов","15 GB NVMe SSD","10 Email аккаунтов","Бесплатный SSL","Ежедневный бекап","cPanel"]},
+        {name:"Pro",desc:"Для серьёзных проектов",price:9.99,color:"#A78BFA",popular:false,extras:["до 15 сайтов","30 GB NVMe SSD","Безлимитный Email","Бесплатный SSL","Приоритетный бекап","Приоритетная поддержка"]},
+        {name:"Agency",desc:"Для агентств и разработчиков",price:19.99,color:"#FB923C",popular:false,extras:["до 30 сайтов","60 GB NVMe SSD","Безлимитный Email","Wildcard SSL","White-label готов","VIP поддержка 24/7"]}
+      ]},
+    who:{title:"Для кого подходит?",sub:"Масштабируемое решение для любого размера бизнеса",
+      items:[
+        {icon:"🏢",color:"#6EE7B7",bg:"rgba(110,231,183,.1)",title:"Бизнес",desc:"Корпоративные сайты, лендинги, CRM. Надёжность и скорость для вашего бренда."},
+        {icon:"👨‍💻",color:"#60A5FA",bg:"rgba(96,165,250,.1)",title:"Разработчики",desc:"Перепродавайте хостинг клиентам под своим брендом. White-label решения."},
+        {icon:"🛒",color:"#A78BFA",bg:"rgba(167,139,250,.1)",title:"Интернет-магазины",desc:"WooCommerce, PrestaShop, OpenCart. Быстрый хостинг для e-commerce."},
+        {icon:"🚀",color:"#FB923C",bg:"rgba(251,146,60,.1)",title:"Стартапы",desc:"Начните малым и масштабируйтесь мгновенно. Без переездов и простоев."}
+      ]},
+    cta:{title:"Готовы начать?",sub:"Запустите первый сайт уже сегодня — без технических знаний."},
+    footer:{tagline:"Современный хостинг для современных проектов.",copy:"© 2025 HostPro. Все права защищены."}
+  },
+  en: {
+    nav:{features:"Features",pricing:"Pricing",who:"Who It's For",cta:"Get Started"},
+    hero:{badge:"⚡ NVMe SSD · 99.9% Uptime · cPanel",title1:"Hosting that",title2:"just works",sub:"Fast SSD servers, free SSL, cPanel, and 24/7 support. Launch your site in minutes.",cta:"Get Started →",ctaSub:"No hidden fees · Cancel anytime",stat1:"Active Websites",stat2:"Load Time",stat3:"Uptime SLA"},
+    features:{title:"Everything you need to succeed",sub:"We handle the infrastructure — you focus on your business",
+      items:[
+        {icon:"⚡",title:"NVMe SSD",desc:"3× faster than regular SSD. Your website loads instantly, every time."},
+        {icon:"🔒",title:"Free SSL",desc:"Let's Encrypt SSL for every domain. Automatic and always free."},
+        {icon:"📋",title:"cPanel",desc:"Industry-standard control panel for all your sites and email accounts."},
+        {icon:"💾",title:"Daily Backups",desc:"Automatic daily backups. One-click restore whenever you need it."},
+        {icon:"🌐",title:"99.9% Uptime",desc:"Guaranteed uptime with SLA agreement included in every plan."},
+        {icon:"🎧",title:"24/7 Support",desc:"Real humans every day. Average response time under 5 minutes."}
+      ]},
+    billing:{monthly:"Monthly",quarterly:"Quarterly",yearly:"Yearly",save10:"−10%",save20:"−20%"},
+    pricing:{title:"Transparent pricing",sub:"Pick a plan and scale without limits",popular:"Most Popular",mo:"/mo",cta:"Choose Plan",feat_label:"Included:",
+      plans:[
+        {name:"Starter",desc:"Perfect for your first website",price:2.99,color:"#6EE7B7",popular:false,extras:["1 Website","5 GB NVMe SSD","1 Email Account","Free SSL","cPanel"]},
+        {name:"Business",desc:"For growing projects",price:5.99,color:"#60A5FA",popular:true,extras:["Up to 5 Websites","15 GB NVMe SSD","10 Email Accounts","Free SSL","Daily Backups","cPanel"]},
+        {name:"Pro",desc:"For serious projects",price:9.99,color:"#A78BFA",popular:false,extras:["Up to 15 Websites","30 GB NVMe SSD","Unlimited Email","Free SSL","Priority Backups","Priority Support"]},
+        {name:"Agency",desc:"For agencies & developers",price:19.99,color:"#FB923C",popular:false,extras:["Up to 30 Websites","60 GB NVMe SSD","Unlimited Email","Wildcard SSL","White-label Ready","VIP 24/7 Support"]}
+      ]},
+    who:{title:"Who is it for?",sub:"Scalable solution for every business size",
+      items:[
+        {icon:"🏢",color:"#6EE7B7",bg:"rgba(110,231,183,.1)",title:"Businesses",desc:"Corporate sites, landing pages, CRM. Reliability and speed for your brand."},
+        {icon:"👨‍💻",color:"#60A5FA",bg:"rgba(96,165,250,.1)",title:"Developers",desc:"Resell hosting to clients under your own brand. White-label solutions."},
+        {icon:"🛒",color:"#A78BFA",bg:"rgba(167,139,250,.1)",title:"Online Stores",desc:"WooCommerce, PrestaShop, OpenCart. Fast hosting for e-commerce."},
+        {icon:"🚀",color:"#FB923C",bg:"rgba(251,146,60,.1)",title:"Startups",desc:"Start small and scale instantly. No migrations, no downtime."}
+      ]},
+    cta:{title:"Ready to launch?",sub:"Launch your first site today — no technical skills required."},
+    footer:{tagline:"Modern hosting for modern projects.",copy:"© 2025 HostPro. All rights reserved."}
+  }
+};
+
+// ===== STATE =====
+let lang = 'uk';
+let billing = 'monthly';
+const DISC = {monthly:1,quarterly:0.9,yearly:0.8};
+
+// ===== RENDER FEATURES =====
+function renderFeatures(){
+  const grid = document.getElementById('features-grid');
+  const items = T[lang].features.items;
+  grid.innerHTML = items.map(f=>`
+    <div class="feat-card">
+      <div class="feat-icon">${f.icon}</div>
+      <div class="feat-title">${f.title}</div>
+      <div class="feat-desc">${f.desc}</div>
+    </div>
+  `).join('');
+}
+
+// ===== RENDER PLANS =====
+function renderPlans(){
+  const grid = document.getElementById('plans-grid');
+  const t = T[lang].pricing;
+  const disc = DISC[billing];
+  grid.innerHTML = t.plans.map(p=>{
+    const price = (p.price * disc).toFixed(2);
+    const feats = p.extras.map(e=>`
+      <div class="plan-feat-item">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <circle cx="7" cy="7" r="7" fill="${p.color}" fill-opacity="0.15"/>
+          <path d="M4 7l2 2 4-4" stroke="${p.color}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>${e}</span>
+      </div>
+    `).join('');
+    return `
+      <div class="plan-card${p.popular?' popular':''}">
+        ${p.popular?`<div class="popular-badge">${t.popular}</div>`:''}
+        <div class="plan-header">
+          <div class="plan-dot" style="background:${p.color};box-shadow:0 0 12px ${p.color}"></div>
+          <div class="plan-name">${p.name}</div>
+        </div>
+        <div class="plan-desc">${p.desc}</div>
+        <div class="plan-price-wrap">
+          <span class="plan-price" style="color:${p.color}">$${price}</span>
+          <span class="plan-mo">${t.mo}</span>
+        </div>
+        <button class="btn-plan${p.popular?' primary':''}">${t.cta}</button>
+        <div class="plan-features">
+          <div class="plan-feat-label">${t.feat_label}</div>
+          ${feats}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ===== RENDER WHO =====
+function renderWho(){
+  const grid = document.getElementById('who-grid');
+  T[lang].who.items.forEach(w=>{
+    const card = document.createElement('div');
+    card.className = 'who-card';
+    card.innerHTML = `
+      <div class="who-emoji" style="background:${w.bg}">${w.icon}</div>
+      <div class="who-title" style="color:${w.color}">${w.title}</div>
+      <div class="who-desc">${w.desc}</div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// ===== APPLY i18n =====
+function applyTranslations(){
+  const t = T[lang];
+  const flat = {};
+  function flatten(obj, prefix=''){
+    for(const k in obj){
+      const key = prefix ? prefix+'.'+k : k;
+      if(typeof obj[k]==='object' && !Array.isArray(obj[k])) flatten(obj[k],key);
+      else flat[key] = obj[k];
+    }
+  }
+  flatten(t);
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key = el.getAttribute('data-i18n');
+    if(flat[key]!==undefined) el.textContent = flat[key];
+  });
+}
+
+// ===== SET LANG =====
+function setLang(l){
+  lang = l;
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelector(`.lang-btn[onclick="setLang('${l}')"]`).classList.add('active');
+  applyTranslations();
+  renderFeatures();
+  renderPlans();
+  document.getElementById('who-grid').innerHTML='';
+  renderWho();
+}
+
+// ===== SET BILLING =====
+function setBilling(b){
+  billing = b;
+  document.querySelectorAll('.billing-btn').forEach(btn=>btn.classList.remove('active'));
+  document.getElementById('bill-'+b).classList.add('active');
+  renderPlans();
+}
+
+// ===== SCROLL ANIMATIONS =====
+function initScrollAnim(){
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{if(e.isIntersecting) e.target.classList.add('visible')});
+  },{threshold:0.12});
+  document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+}
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded',()=>{
+  applyTranslations();
+  renderFeatures();
+  renderPlans();
+  renderWho();
+  initScrollAnim();
+});
+</script>
+</body>
+</html>
