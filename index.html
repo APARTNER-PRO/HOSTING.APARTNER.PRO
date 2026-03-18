@@ -539,6 +539,10 @@ function setBilling(b){
   renderPlans();
 }
 
+function scrollToPricing(){
+  document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
 function getBillingLabel(){
   return T[lang].billing[billing];
 }
@@ -636,6 +640,9 @@ document.addEventListener('DOMContentLoaded',()=>{
   renderPlans();
   renderWho();
   initScrollAnim();
+  document.querySelector('.btn-nav')?.addEventListener('click', scrollToPricing);
+  document.querySelector('.btn-hero')?.addEventListener('click', scrollToPricing);
+  document.querySelector('.btn-cta')?.addEventListener('click', scrollToPricing);
 });
 </script>
 </body>
