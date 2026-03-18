@@ -227,11 +227,11 @@ function useInView(ref, threshold = 0.15) {
   return inView;
 }
 
-function AnimSection({ children, className = "" }) {
+function AnimSection({ children, className = "", style = {} }) {
   const ref = useRef(null);
   const inView = useInView(ref);
   return (
-    <div ref={ref} className={className} style={{ opacity: inView ? 1 : 0, transform: inView ? "translateY(0)" : "translateY(32px)", transition: "opacity 0.7s ease, transform 0.7s ease" }}>
+    <div ref={ref} className={className} style={{ opacity: inView ? 1 : 0, transform: inView ? "translateY(0)" : "translateY(32px)", transition: "opacity 0.7s ease, transform 0.7s ease", ...style }}>
       {children}
     </div>
   );
