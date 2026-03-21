@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>404 — Page Not Found | HostPro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#050810;color:#F0F4FF;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 24px;overflow:hidden}
+.orb{position:fixed;border-radius:50%;filter:blur(80px);pointer-events:none}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;color:#F0F4FF;position:fixed;top:24px;left:24px}
+.logo-icon{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#3B82F6,#8B5CF6);display:flex;align-items:center;justify-content:center;font-size:16px}
+.logo-text{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;letter-spacing:-.5px}
+.lang-bar{position:fixed;top:24px;right:24px;display:flex;gap:3px;background:rgba(255,255,255,.05);border-radius:8px;padding:3px}
+.lang-bar a{color:rgba(240,244,255,.4);font-size:11px;font-weight:700;text-transform:uppercase;padding:4px 9px;border-radius:5px;text-decoration:none;transition:all .2s}
+.lang-bar a.cur{background:rgba(96,165,250,.2);color:#60A5FA}
+.code{font-family:'Syne',sans-serif;font-size:clamp(100px,20vw,180px);font-weight:800;line-height:1;background:linear-gradient(135deg,#60A5FA,#A78BFA,#FB923C);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px;animation:pulse 3s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.8}50%{opacity:1}}
+.title{font-family:'Syne',sans-serif;font-size:clamp(22px,4vw,36px);font-weight:800;margin-bottom:12px}
+.sub{font-size:16px;color:rgba(240,244,255,.5);max-width:440px;line-height:1.6;font-weight:300;margin-bottom:36px}
+.actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:48px}
+.btn-home{background:linear-gradient(135deg,#3B82F6,#8B5CF6);border:none;color:#fff;padding:13px 28px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;display:inline-block;transition:all .2s}
+.btn-home:hover{transform:scale(1.04);filter:brightness(1.1)}
+.btn-back{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(240,244,255,.7);padding:13px 28px;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;display:inline-block;transition:all .2s}
+.btn-back:hover{border-color:rgba(96,165,250,.4);color:#60A5FA}
+.links{display:flex;gap:20px;justify-content:center;flex-wrap:wrap}
+.links a{font-size:13px;color:rgba(240,244,255,.35);text-decoration:none;transition:color .2s}
+.links a:hover{color:#60A5FA}
+</style>
+</head>
+<body>
+<div class="orb" style="width:500px;height:500px;background:radial-gradient(circle,rgba(59,130,246,.18),transparent);top:-100px;left:50%;transform:translateX(-50%)"></div>
+<div class="orb" style="width:300px;height:300px;background:radial-gradient(circle,rgba(139,92,246,.12),transparent);bottom:0;right:0"></div>
+
+<a href="/" class="logo"><div class="logo-icon">&#9889;</div><span class="logo-text">HostPro</span></a>
+
+<div class="lang-bar">
+  <a href="#" onclick="setLang('en')" id="l-en" class="cur">EN</a>
+  <a href="#" onclick="setLang('uk')" id="l-uk">UK</a>
+  <a href="#" onclick="setLang('ru')" id="l-ru">RU</a>
+</div>
+
+<div class="code">404</div>
+<h1 class="title" id="t404">Page not found</h1>
+<p class="sub" id="s404">Looks like this page doesn&rsquo;t exist or has been moved. Let&rsquo;s get you back on track.</p>
+
+<div class="actions">
+  <a href="/" class="btn-home" id="btn-home">&#8592; Go to Homepage</a>
+  <a href="javascript:history.back()" class="btn-back" id="btn-back">Go back</a>
+</div>
+
+<div class="links">
+  <a href="/index.html#pricing" id="lnk-pricing">Pricing</a>
+  <a href="/contact.html" id="lnk-contact">Contact support</a>
+  <a href="/status.html" id="lnk-status">System status</a>
+  <a href="/faq.html" id="lnk-faq">FAQ</a>
+</div>
+
+<script>
+var T={
+  en:{t:'Page not found',s:'Looks like this page doesn’t exist or has been moved. Let’s get you back on track.',home:'← Go to Homepage',back:'Go back',pricing:'Pricing',contact:'Contact support',status:'System status',faq:'FAQ'},
+  uk:{t:'Сторінку не знайдено',s:'Здається, цього сторінки не існує або вона була переміщена. Повернімось на потрібний шлях.',home:'← На головну',back:'Назад',pricing:'Тарифи',contact:'Підтримка',status:'Статус',faq:'FAQ'},
+  ru:{t:'Страница не найдена',s:'Похоже, этой страницы не существует или она была перемещена. Вернёмся на нужный путь.',home:'← На главную',back:'Назад',pricing:'Тарифы',contact:'Поддержка',status:'Статус',faq:'FAQ'},
+};
+var cur='en';
+function setLang(l){
+  cur=l;
+  document.querySelectorAll('.lang-bar a').forEach(function(a){a.classList.remove('cur');});
+  document.getElementById('l-'+l).classList.add('cur');
+  var L=T[l];
+  var p=l==='uk'?'/uk':l==='ru'?'/ru':'';
+  document.getElementById('t404').textContent=L.t;
+  document.getElementById('s404').textContent=L.s;
+  document.getElementById('btn-home').textContent=L.home;
+  document.getElementById('btn-home').href=p+'/';
+  document.getElementById('btn-back').textContent=L.back;
+  document.getElementById('lnk-pricing').textContent=L.pricing;
+  document.getElementById('lnk-pricing').href=p+'/index.html#pricing';
+  document.getElementById('lnk-contact').textContent=L.contact;
+  document.getElementById('lnk-contact').href=p+'/contact.html';
+  document.getElementById('lnk-status').textContent=L.status;
+  document.getElementById('lnk-status').href=p+'/status.html';
+  document.getElementById('lnk-faq').textContent=L.faq;
+  document.getElementById('lnk-faq').href=p+'/faq.html';
+}
+// Auto-detect from URL
+var path=window.location.pathname;
+if(path.startsWith('/uk'))setLang('uk');
+else if(path.startsWith('/ru'))setLang('ru');
+</script>
+<script src="cookies.js"></script>
+</body>
+</html>
